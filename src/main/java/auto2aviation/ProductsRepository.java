@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository 
- public interface XRepository extends JpaRepository<Products, Integer>{
+ public interface ProductsRepository extends JpaRepository<Products, Integer>{
 
 	@Query("from Products where City = :x")
 	List<Products> oncat(@Param("x") String y);

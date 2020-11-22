@@ -15,35 +15,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
-public class ProductWebservice {
+public class Webservices {
 	
-	private XRepository r;
+	private ProductsRepository p;
 	
 	
 	@Autowired
-	public void f1(XRepository y)
+	public void f1(ProductsRepository y)
 	{ 
 		System.out.println("autowired successfully");
-		r =y;
+		p =y;
 		
 	}
 	
 	
-	
-	
-	//http://localhost:7070/hw
-	@GetMapping("/hw")
-	public String f1()
-	{
-		return "hey web servcie is working";
-		
-	}
-	
-	@GetMapping("/product/getAllProducts")
-	public List<Products> ss()
+	@GetMapping("/vehicle/getAllProducts")
+	public List<Products> allProducts()
 	{	
 		
-		return r.findAll();
+		return p.findAll();
 				
 	}
 }
