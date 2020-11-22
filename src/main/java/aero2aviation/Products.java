@@ -1,4 +1,4 @@
-package product;
+package auto2aviation;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
