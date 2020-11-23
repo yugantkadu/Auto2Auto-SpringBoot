@@ -54,13 +54,17 @@ public class Webservices {
 	@PostMapping("/user/registration")
 	public CustomerResult ins(@RequestBody Customer customer)
 	{
+		
 		CustomerResult ur = new CustomerResult(false,"Registration Failed");  	
     	cr.save(customer);
       	ur.setStatus(true);
      	ur.setMessage("Registration Successfull");
     	return ur;
 		
+    	
 	}
+	
+	
 	
 	
 }
