@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Webservices {
 	
+	private CustomerRepository cr;
 	private ProductsRepository p;
 	private CategoryRepository cat;
+	private BrandRepository b;
 	
 	@Autowired
 	public void f1(ProductsRepository y)
@@ -29,10 +31,24 @@ public class Webservices {
 	}
 	
 	@Autowired
+	public void f1(CustomerRepository cr1)
+	{ 
+		System.out.println("AutoWired of CustomerRepository is Successfully");
+		cr = cr1;
+		
+	}
+	
+	@Autowired
 	public void f1(CategoryRepository z)
 	{ 
-		System.out.println("autowired successfully");
+		System.out.println("AutoWired of CategoryRepository is Successfully");
 		cat =z;
+	}
+	
+	public void getbrands(BrandRepository y)
+	{ 
+		System.out.println("AutoWired of BrandRepository is Successfully");
+		b =y;
 		
 	}
 	
@@ -54,7 +70,12 @@ public class Webservices {
      	ur.setMessage("Registration Successfull");
     	return ur;
 		
-    	
+	}
+	
+	@GetMapping("/vehicle/getAllBrands")
+	public List<Brand> allBrand()
+	{	
+		return b.findAll();		
 	}
 	
 	@GetMapping("/vehicle/getCategoryDetails")

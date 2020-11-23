@@ -8,10 +8,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository 
- public interface ProductsRepository extends JpaRepository<Products, Integer>{
+ public interface BrandRepository extends JpaRepository<Brand, Integer>{
 
-	@Query("from Products where City = :x")
-	List<Products> oncat(@Param("x") String y);
+	
 }
 
 
