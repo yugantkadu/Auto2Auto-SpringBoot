@@ -1,7 +1,6 @@
 package auto2aviation;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,10 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class Webservices {
 	
 	private ProductsRepository p;
-	private CustomerRepository customer;
-	
-	private CustomerRepository cr;
-	
+	private CategoryRepository cat;
 	
 	@Autowired
 	public void f1(ProductsRepository y)
@@ -32,15 +28,13 @@ public class Webservices {
 		
 	}
 	
-	
 	@Autowired
-	public void f1(CustomerRepository cr1)
+	public void f1(CategoryRepository z)
 	{ 
-		System.out.println("AutoWired of CustomerRepository is Successfull");
-		cr = cr1;
+		System.out.println("autowired successfully");
+		cat =z;
 		
 	}
-	
 	
 	@GetMapping("/vehicle/getAllProducts")
 	public List<Products> allProducts()
@@ -50,17 +44,11 @@ public class Webservices {
 				
 	}
 	
-	
-	@PostMapping("/user/registration")
-	public CustomerResult ins(@RequestBody Customer customer)
-	{
-		CustomerResult ur = new CustomerResult(false,"Registration Failed");  	
-    	cr.save(customer);
-      	ur.setStatus(true);
-     	ur.setMessage("Registration Successfull");
-    	return ur;
+	@GetMapping("/vehicle/getCategoryDetails")
+	public List<Category> categoryDetails()
+	{	
 		
+		return cat.findAll();
+				
 	}
-	
-	
 }
