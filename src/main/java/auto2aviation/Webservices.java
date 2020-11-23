@@ -18,13 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class Webservices {
 	
 	private ProductsRepository p;
-	
+	private BrandRepository b;
 	
 	@Autowired
 	public void f1(ProductsRepository y)
 	{ 
 		System.out.println("autowired successfully");
 		p =y;
+		
+	}
+	
+	@Autowired
+	public void getbrands(BrandRepository y)
+	{ 
+		System.out.println("autowired successfully");
+		b =y;
 		
 	}
 	
@@ -36,4 +44,12 @@ public class Webservices {
 		return p.findAll();
 				
 	}
+	
+	@GetMapping("/vehicle/getAllBrands")
+	public List<Brand> allBrand()
+	{	
+		return b.findAll();		
+	}
+	
+	
 }
