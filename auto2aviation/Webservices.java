@@ -44,7 +44,8 @@ public class Webservices {
 		System.out.println("AutoWired of CategoryRepository is Successfully");
 		cat =z;
 	}
-	
+
+	@Autowired
 	public void getbrands(BrandRepository y)
 	{ 
 		System.out.println("AutoWired of BrandRepository is Successfully");
@@ -58,6 +59,17 @@ public class Webservices {
 		
 		return p.findAll();
 				
+	}
+	
+	@PostMapping("/user/verifyCustomer")
+	public Customer allCustomers(@RequestBody Customer customer)
+	{	
+		Customer isCustomer = cr.oncat(customer.getEmail(), customer.getPassword());
+		if(isCustomer!= null) {
+			return isCustomer;
+		}else
+			customer.setCategoryid(0);
+		return customer;	
 	}
 	
 	@PostMapping("/user/registration")
