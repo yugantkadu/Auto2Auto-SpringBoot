@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository 
 public interface CustomerRepository extends JpaRepository<Customer, Integer>{
 
-	
+	@Query("from Customer where email= :email and password= :password")
+	Customer oncat(@Param("email") String email,@Param("password") String password );
 }
 
