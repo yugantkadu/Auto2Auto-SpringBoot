@@ -7,18 +7,19 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
 
-enum customerType
+enum userType
 {
   retailer,
-  manufacturer;
+  manufacturer,
+  admin;
   
 }
 
 @Entity
-public class Customer
+public class User
 {
 	@Id
-	private int customerid;
+	private int userid;
 	
 	private String firstname;
 
@@ -39,20 +40,20 @@ public class Customer
 	private int brandid;
 	
 	@Column(
-		    columnDefinition = "Enum('retailer','manufacturer')"
+		    columnDefinition = "Enum('retailer','manufacturer','admin')"
 			)
 	@Enumerated(EnumType.STRING)
-	private customerType customertype;
+	private userType usertype;
 
-	public Customer() {
+	public User() {
 		super();
 		
 	}
 
-	public Customer(int customerid, String firstname, String lastname, String email, String password, long mobileno,
-			String address, String pincode, int categoryid, int brandid, customerType customertype) {
+	public User(int userid, String firstname, String lastname, String email, String password, long mobileno,
+			String address, String pincode, int categoryid, int brandid, userType usertype) {
 		super();
-		this.customerid = customerid;
+		this.userid = userid;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
@@ -62,15 +63,15 @@ public class Customer
 		this.pincode = pincode;
 		this.categoryid = categoryid;
 		this.brandid = brandid;
-		this.customertype = customertype;
+		this.usertype = usertype;
 	}
 
-	public int getCustomerid() {
-		return customerid;
+	public int getUserid() {
+		return userid;
 	}
 
-	public void setCustomerid(int customerid) {
-		this.customerid = customerid;
+	public void setUserid(int userid) {
+		this.userid = userid;
 	}
 
 	public String getFirstname() {
@@ -145,12 +146,12 @@ public class Customer
 		this.brandid = brandid;
 	}
 
-	public customerType getCustomertype() {
-		return customertype;
+	public userType getUsertype() {
+		return usertype;
 	}
 
-	public void setCustomertype(customerType customertype) {
-		this.customertype = customertype;
+	public void setUsertype(userType usertype) {
+		this.usertype = usertype;
 	}
 
 	
