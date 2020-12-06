@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-@Repository 
- public interface ProductsRepository extends JpaRepository<Products, Integer>{
+@Repository
+public interface orderdetailsRepository extends JpaRepository<orderdetails, Integer> {
+	@Query("select o from orderdetails")
+	List<orderdetails> getdetails(); 
 
 }
-
-
