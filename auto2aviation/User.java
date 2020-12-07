@@ -1,10 +1,15 @@
 package auto2aviation;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 enum userType
@@ -38,6 +43,9 @@ public class User
 	private int categoryid;
 	
 	private int brandid;
+	
+	@OneToMany(mappedBy = "retailerid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Orderdetails> orderitems;
 	
 	@Column(
 		    columnDefinition = "Enum('retailer','manufacturer','admin')"
