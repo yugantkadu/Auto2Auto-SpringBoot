@@ -62,7 +62,7 @@ public class Webservices {
 	}
 	
 	@PostMapping("/user/verifyCustomer")
-	public Customer allCustomers(@RequestBody Customer customer)
+	public Customer userLogin(@RequestBody Customer customer)
 	{	
 		Customer isCustomer = cr.oncat(customer.getEmail(), customer.getPassword());
 		if(isCustomer!= null) {
@@ -73,7 +73,7 @@ public class Webservices {
 	}
 	
 	@PostMapping("/user/registration")
-	public CustomerResult ins(@RequestBody Customer customer)
+	public CustomerResult userRegistration(@RequestBody Customer customer)
 	{
 		
 		CustomerResult ur = new CustomerResult(false,"Registration Failed");  	
@@ -85,7 +85,7 @@ public class Webservices {
 	}
 	
 	@GetMapping("/vehicle/getAllBrands")
-	public List<Brand> allBrand()
+	public List<Brand> getallBrand()
 	{	
 		return b.findAll();		
 	}
@@ -97,5 +97,19 @@ public class Webservices {
 		return cat.findAll();
 				
 	}
+	
+	@PostMapping("/vehicle/addProduct")
+	public ProductResult addProduct(@RequestBody Products products)
+	{
+		
+		ProductResult pr = new ProductResult(false,"Insertion Failed");  	
+    	p.save(products);
+    	pr.setStatus(true);
+    	pr.setMessage("Add Vehicle Successfull");
+    	return pr;
+		
+	}
+	
+	
 
 }
