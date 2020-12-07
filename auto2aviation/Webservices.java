@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Webservices {
 	
-	private CustomerRepository cr;
+	private UserRepository user;
 	private ProductsRepository p;
 	private CategoryRepository cat;
 	private BrandRepository b;
@@ -31,10 +33,10 @@ public class Webservices {
 	}
 	
 	@Autowired
-	public void f1(CustomerRepository cr1)
+	public void f1(UserRepository cr1)
 	{ 
 		System.out.println("AutoWired of CustomerRepository is Successfully");
-		cr = cr1;
+		user = cr1;
 		
 	}
 	
@@ -44,7 +46,7 @@ public class Webservices {
 		System.out.println("AutoWired of CategoryRepository is Successfully");
 		cat =z;
 	}
-
+	
 	@Autowired
 	public void getbrands(BrandRepository y)
 	{ 
@@ -62,26 +64,54 @@ public class Webservices {
 	}
 	
 	@PostMapping("/user/verifyCustomer")
-	public Customer userLogin(@RequestBody Customer customer)
+
+	public UserResult allCustomers(@RequestBody User us)
 	{	
-		Customer isCustomer = cr.oncat(customer.getEmail(), customer.getPassword());
+		UserResult ur;
+		User isCustomer = user.login(us.getEmail(), us.getPassword());
 		if(isCustomer!= null) {
-			return isCustomer;
+			ur = new UserResult(true,"User Present", isCustomer);
 		}else
-			customer.setCategoryid(0);
-		return customer;	
+			ur = new UserResult(false,"User is not Present", isCustomer);
+		return ur;	
 	}
 	
 	@PostMapping("/user/registration")
-	public CustomerResult userRegistration(@RequestBody Customer customer)
+	public UserResult ins(@RequestBody User us)
 	{
 		
-		CustomerResult ur = new CustomerResult(false,"Registration Failed");  	
-    	cr.save(customer);
+		UserResult ur = new UserResult(false,"Registration Failed", us);  	
+		user.save(us);
       	ur.setStatus(true);
      	ur.setMessage("Registration Successfull");
     	return ur;
 		
+	}
+	
+	@GetMapping("/admin/allUsers")
+	public List<User> getAllUser()
+	{
+		return user.retrieve();
+	}
+	
+	@PutMapping("/admin/modifyUser/{id}")
+	public UserResult updateEmployee(@PathVariable(value = "id") int userId,
+			@RequestBody User userDetails){
+		
+		boolean isUser = user.existsById(userId);
+		int updateStatus;
+		UserResult ur;
+		
+		if(isUser)
+		{
+			updateStatus = user.updateEmployee(userDetails);
+			ur = new UserResult(true,"User Present", userDetails); 	
+
+		} else {
+			//ur = new UserResult(false,"User not present " + userId, userdetails);  	
+			ur = new UserResult(false," not User Present", userDetails);
+		}
+		return ur;
 	}
 	
 	@GetMapping("/vehicle/getAllBrands")

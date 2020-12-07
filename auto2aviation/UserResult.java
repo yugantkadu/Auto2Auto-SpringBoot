@@ -1,21 +1,19 @@
 package auto2aviation;
 
-public class CustomerResult 
+import java.util.Optional;
+
+public class UserResult 
 {
 	
-private boolean status;
-	
+	private boolean status;
 	private String message;
+	private User user;
 
-	public CustomerResult() {
-		super();
-		
-	}
-
-	public CustomerResult(boolean status, String message) {
+	public UserResult(boolean status, String message, User user) {
 		super();
 		this.status = status;
 		this.message = message;
+		this.user = user;
 	}
 
 	public boolean isStatus() {
@@ -34,6 +32,12 @@ private boolean status;
 		this.message = message;
 	}
 	
-	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 }
