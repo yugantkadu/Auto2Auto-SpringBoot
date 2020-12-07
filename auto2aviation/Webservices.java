@@ -23,6 +23,7 @@ public class Webservices {
 	private ProductsRepository p;
 	private CategoryRepository cat;
 	private BrandRepository b;
+	private OrderdetailsRepository ord;
 	
 	@Autowired
 	public void f1(ProductsRepository y)
@@ -52,6 +53,14 @@ public class Webservices {
 	{ 
 		System.out.println("AutoWired of BrandRepository is Successfully");
 		b =y;
+		
+	}
+	
+	@Autowired
+	public void getorderdetails(OrderdetailsRepository o)
+	{ 
+		System.out.println("AutoWired of OrderdetailsRepository is Successfully");
+		ord =o;
 		
 	}
 	
@@ -124,6 +133,13 @@ public class Webservices {
 	{	
 		
 		return cat.findAll();
+				
+	}
+	
+	@GetMapping("/vehicle/getOrderDetails")
+	public List<OrderdetailsResult> OrderDetails()
+	{	
+		return ord.allOrderDetails();
 				
 	}
 
