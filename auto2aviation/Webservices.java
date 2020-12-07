@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Webservices {
 	
-	//private UserRepository user;
+	private UserRepository user;
 	private ProductsRepository p;
 	private CategoryRepository cat;
 	private BrandRepository b;
-	private orderdetailsRepository od;
+	private OrderdetailsRepository ord;
 	
 	@Autowired
 	public void f1(ProductsRepository y)
@@ -34,20 +34,12 @@ public class Webservices {
 	}
 	
 	@Autowired
-	public void List(orderdetailsRepository or)
+	public void f1(UserRepository cr1)
 	{ 
-		System.out.println("autowired successfully");
-		od =or;
+		System.out.println("AutoWired of CustomerRepository is Successfully");
+		user = cr1;
 		
 	}
-	
-	/*
-	 * @Autowired public void f1(UserRepository cr1) {
-	 * System.out.println("AutoWired of CustomerRepository is Successfully"); user =
-	 * cr1;
-	 * 
-	 * }
-	 */
 	
 	@Autowired
 	public void f1(CategoryRepository z)
@@ -64,6 +56,14 @@ public class Webservices {
 		
 	}
 	
+	@Autowired
+	public void getorderdetails(OrderdetailsRepository o)
+	{ 
+		System.out.println("AutoWired of OrderdetailsRepository is Successfully");
+		ord =o;
+		
+	}
+	
 	@GetMapping("/vehicle/getAllProducts")
 	public List<Products> allProducts()
 	{	
@@ -72,51 +72,59 @@ public class Webservices {
 				
 	}
 	
-	@GetMapping("/vehicle/getOrderDetails")
-	public List<orderdetails> details()
+	@PostMapping("/user/verifyCustomer")
+
+	public UserResult allCustomers(@RequestBody User us)
 	{	
-		
-		return od.getdetails();
-				
+		UserResult ur;
+		User isCustomer = user.login(us.getEmail(), us.getPassword());
+		if(isCustomer!= null) {
+			ur = new UserResult(true,"User Present", isCustomer);
+		}else
+			ur = new UserResult(false,"User is not Present", isCustomer);
+		return ur;	
 	}
 	
-	/*
-	 * @PostMapping("/user/verifyCustomer") public UserResult
-	 * allCustomers(@RequestBody User us) { UserResult ur; User isCustomer =
-	 * user.login(us.getEmail(), us.getPassword()); if(isCustomer!= null) { ur = new
-	 * UserResult(true,"User Present", isCustomer); }else ur = new
-	 * UserResult(false,"User is not Present", isCustomer); return ur; }
-	 * 
-	 * @PostMapping("/user/registration") public UserResult ins(@RequestBody User
-	 * us) {
-	 * 
-	 * UserResult ur = new UserResult(false,"Registration Failed", us);
-	 * user.save(us); ur.setStatus(true); ur.setMessage("Registration Successfull");
-	 * return ur;
-	 * 
-	 * }
-	 */
-	/*
-	 * @GetMapping("/admin/allUsers") public List<User> getAllUser() { return
-	 * user.retrieve(); }
-	 * 
-	 * @PutMapping("/admin/modifyUser/{id}") public UserResult
-	 * updateEmployee(@PathVariable(value = "id") int userId,
-	 * 
-	 * @RequestBody User userDetails){
-	 * 
-	 * boolean isUser = user.existsById(userId); int updateStatus; UserResult ur;
-	 * 
-	 * if(isUser) { updateStatus = user.updateEmployee(userDetails); ur = new
-	 * UserResult(true,"User Present", userDetails);
-	 * 
-	 * } else { //ur = new UserResult(false,"User not present " + userId,
-	 * userdetails); ur = new UserResult(false," not User Present", userDetails); }
-	 * return ur; }
-	 */
+	@PostMapping("/user/registration")
+	public UserResult ins(@RequestBody User us)
+	{
+		
+		UserResult ur = new UserResult(false,"Registration Failed", us);  	
+		user.save(us);
+      	ur.setStatus(true);
+     	ur.setMessage("Registration Successfull");
+    	return ur;
+		
+	}
+	
+	@GetMapping("/admin/allUsers")
+	public List<User> getAllUser()
+	{
+		return user.retrieve();
+	}
+	
+	@PutMapping("/admin/modifyUser/{id}")
+	public UserResult updateEmployee(@PathVariable(value = "id") int userId,
+			@RequestBody User userDetails){
+		
+		boolean isUser = user.existsById(userId);
+		int updateStatus;
+		UserResult ur;
+		
+		if(isUser)
+		{
+			updateStatus = user.updateEmployee(userDetails);
+			ur = new UserResult(true,"User Present", userDetails); 	
+
+		} else {
+			//ur = new UserResult(false,"User not present " + userId, userdetails);  	
+			ur = new UserResult(false," not User Present", userDetails);
+		}
+		return ur;
+	}
 	
 	@GetMapping("/vehicle/getAllBrands")
-	public List<Brand> allBrand()
+	public List<Brand> getallBrand()
 	{	
 		return b.findAll();		
 	}
@@ -128,5 +136,28 @@ public class Webservices {
 		return cat.findAll();
 				
 	}
+	
+
+	@PostMapping("/vehicle/addProduct")
+	public ProductResult addProduct(@RequestBody Products products)
+	{
+		
+		ProductResult pr = new ProductResult(false,"Insertion Failed");  	
+    	p.save(products);
+    	pr.setStatus(true);
+    	pr.setMessage("Add Vehicle Successfull");
+    	return pr;
+		
+	}
+	
+	
+
+	@GetMapping("/vehicle/getOrderDetails")
+	public List<OrderdetailsResult> OrderDetails()
+	{	
+		return ord.allOrderDetails();
+				
+	}
+
 
 }
