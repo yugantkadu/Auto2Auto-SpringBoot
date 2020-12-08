@@ -9,6 +9,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 
@@ -40,12 +42,19 @@ public class User
 	
 	private String pincode;
 	
+	@ManyToOne(targetEntity=Category.class)
+	@JoinColumn(name = "categoryid")
 	private int categoryid;
 	
+	@ManyToOne(targetEntity=Brand.class)
+	@JoinColumn(name = "brandid")
 	private int brandid;
 	
 	@OneToMany(mappedBy = "retailerid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Orderdetails> orderitems;
+	
+	
+	
 	
 	@Column(
 		    columnDefinition = "Enum('retailer','manufacturer','admin')"

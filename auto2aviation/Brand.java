@@ -1,8 +1,13 @@
 package auto2aviation;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Brand {
@@ -15,6 +20,11 @@ public class Brand {
 	 private String name;
 	 private String branddescription;
 	 private String image;
+	 
+	 
+	 @OneToMany(mappedBy = "brandid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	  private List<User> users;
+	 
 	public int getBrandid() {
 		return brandid;
 	}

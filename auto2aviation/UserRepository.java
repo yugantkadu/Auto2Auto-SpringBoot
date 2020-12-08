@@ -22,5 +22,9 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Modifying
 	@Query("Update User u set u.firstname= :#{#user.firstname}, u.lastname= :#{#user.lastname}, u.email= :#{#user.email}, u.password= :#{#user.password}, u.mobileno= :#{#user.mobileno}, u.address= :#{#user.address}, u.pincode= :#{#user.pincode}, u.categoryid= :#{#user.categoryid}, u.brandid= :#{#user.brandid}, u.usertype= :#{#user.usertype} where u.userid= :#{#user.userid}")
 	int updateEmployee(@Param("user") User user);
+	
+	@Query("select new auto2aviation.UserProfileResult(u.userid, u.firstname, c.name,b.name ,u.usertype) from User u Join u.categoryid c Join u.brandid b ")
+	List<UserProfileResult> getUserProfile();
+	
 }
 

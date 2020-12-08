@@ -116,8 +116,9 @@ public class Webservices {
 			updateStatus = user.updateEmployee(userDetails);
 			ur = new UserResult(true,"User Present", userDetails); 	
 
-		} else {
-			//ur = new UserResult(false,"User not present " + userId, userdetails);  	
+		} 
+		else{
+			 	
 			ur = new UserResult(false," not User Present", userDetails);
 		}
 		return ur;
@@ -156,8 +157,17 @@ public class Webservices {
 	public List<OrderdetailsResult> OrderDetails()
 	{	
 		return ord.allOrderDetails();
+		
 				
 	}
-
+	
+	@GetMapping("/user/getUserProfileDetails")
+	public List<UserProfileResult> getUserProfile()
+	{	
+		return user.getUserProfile();
+		
+				
+	}
+	
 
 }
