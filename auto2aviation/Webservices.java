@@ -90,7 +90,7 @@ public class Webservices {
 	{
 		
 		UserResult ur = new UserResult(false,"Registration Failed", us);  	
-		user.save(us);
+		user.saveRegistation(us);
       	ur.setStatus(true);
      	ur.setMessage("Registration Successfull");
     	return ur;

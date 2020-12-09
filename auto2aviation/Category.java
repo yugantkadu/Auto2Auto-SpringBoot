@@ -8,19 +8,24 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.springframework.lang.Nullable;
 @Entity
 public class Category {
 
 	@Column(name="categoryid")
 	@Id
 	  private int categoryid;
+	@Nullable
 	  private String name ;
+	@Nullable
 	  private String categorydescription; 
+	@Nullable
 	  private String image ;
 	  
 		
 	  @OneToMany(mappedBy = "categoryid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	  private List<User> users;
+		private List<Category> categoryDetails;
 	  
 	public int getCategoryid() {
 		return categoryid;
