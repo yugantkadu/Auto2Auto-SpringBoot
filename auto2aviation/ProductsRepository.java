@@ -10,8 +10,4 @@ import org.springframework.stereotype.Repository;
 @Repository 
  public interface ProductsRepository extends JpaRepository<Products, Integer>{
 
-	@Query("from Products where City = :x")
-	List<Products> oncat(@Param("x") String y);
 }
-
-

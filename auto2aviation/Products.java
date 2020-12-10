@@ -1,8 +1,13 @@
 package auto2aviation;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Products {
@@ -18,7 +23,8 @@ public class Products {
 	private int quantityinstock;
 	private long buyprice;
 	
-	
+	@OneToMany(mappedBy = "productid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Products> productitems;
 	
 	public int getProductid() {
 		return productid;
