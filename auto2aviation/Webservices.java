@@ -124,6 +124,48 @@ public class Webservices {
 		return ur;
 	}
 	
+	@PutMapping("/admin/modifyProduct/{id}")
+	public ProductResult modifyProduct(@PathVariable(value = "id") int productsId,
+			@RequestBody Products productsDetails){
+		
+		boolean isProductExist = p.existsById(productsId);
+		int updateStatus;
+		ProductResult pr;
+		
+		if(isProductExist)
+		{
+			updateStatus = p.modifyProductDetails(productsDetails);
+			pr = new ProductResult(true,"Product Updated Successfully", productsDetails); 	
+			
+		} 
+		else{
+			 	
+			pr = new ProductResult(false,"Product  is Not Updated Successfully", productsDetails);
+		}
+		return pr;
+	}
+	
+	@PutMapping("/admin/modifyCategory/{id}")
+	public CategoryResult modifyCategory(@PathVariable(value = "id") int categoryId,
+			@RequestBody Category categoryDetails){
+		
+		boolean isCategoryExist = cat.existsById(categoryId);
+		int updateStatus;
+		CategoryResult cr;
+		
+		if(isCategoryExist)
+		{
+			updateStatus = cat.modifyCategoryDetails(categoryDetails);
+			cr = new CategoryResult(true,"Category Updated Successfully", categoryDetails); 	
+			
+		} 
+		else{
+			 	
+			cr = new CategoryResult(false,"Category is Not Updated Successfully", categoryDetails);
+		}
+		return cr;
+	}
+	
 	@GetMapping("/vehicle/getAllBrands")
 	public List<Brand> getallBrand()
 	{	
@@ -143,7 +185,7 @@ public class Webservices {
 	public ProductResult addProduct(@RequestBody Products products)
 	{
 		
-		ProductResult pr = new ProductResult(false,"Insertion Failed");  	
+		ProductResult pr = new ProductResult(false,"Insertion Failed",null);  	
     	p.save(products);
     	pr.setStatus(true);
     	pr.setMessage("Add Vehicle Successfull");

@@ -10,9 +10,9 @@ public class UserProfileResult
 	
 	private String brandname;
 	
-	private userType usertype;
+	private String usertype;
 
-	public UserProfileResult(int userid, String firstname, String name, String brandname, userType usertype) {
+	public UserProfileResult(int userid, String firstname, String name, String brandname, String usertype) {
 		super();
 		this.userid = userid;
 		this.firstname = firstname;
@@ -53,11 +53,11 @@ public class UserProfileResult
 		this.brandname = brandname;
 	}
 
-	public userType getUsertype() {
+	public String getUsertype() {
 		return usertype;
 	}
 
-	public void setUsertype(userType usertype) {
+	public void setUsertype(String usertype) {
 		this.usertype = usertype;
 	}
 

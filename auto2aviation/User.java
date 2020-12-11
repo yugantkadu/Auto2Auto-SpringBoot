@@ -25,6 +25,7 @@ enum userType
 @Entity
 public class User
 {
+	@Column(name="userid")
 	@Id
 	private int userid;
 	
@@ -42,25 +43,22 @@ public class User
 	
 	private String pincode;
 	
-	@ManyToOne(targetEntity=Category.class)
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "categoryid")
-	private int categoryid;
+	private Category categoryid;
 	
-	@ManyToOne(targetEntity=Brand.class)
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "brandid")
-	private int brandid;
+	private Brand brandid;
 	
-	@OneToMany(mappedBy = "retailerid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Orderdetails> orderitems;
-	
-	
-	
+	@OneToMany(mappedBy = "userid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<User> userDetails;
 	
 	@Column(
 		    columnDefinition = "Enum('retailer','manufacturer','admin')"
 			)
-	@Enumerated(EnumType.STRING)
-	private userType usertype;
+	//@Enumerated(EnumType.STRING)
+	private String usertype;
 
 	public User() {
 		super();
@@ -68,7 +66,7 @@ public class User
 	}
 
 	public User(int userid, String firstname, String lastname, String email, String password, long mobileno,
-			String address, String pincode, int categoryid, int brandid, userType usertype) {
+			String address, String pincode, Category categoryid, Brand brandid, String usertype) {
 		super();
 		this.userid = userid;
 		this.firstname = firstname;
@@ -147,27 +145,27 @@ public class User
 		this.pincode = pincode;
 	}
 
-	public int getCategoryid() {
+	public Category getCategoryid() {
 		return categoryid;
 	}
 
-	public void setCategoryid(int categoryid) {
+	public void setCategoryid(Category categoryid) {
 		this.categoryid = categoryid;
 	}
 
-	public int getBrandid() {
+	public Brand getBrandid() {
 		return brandid;
 	}
 
-	public void setBrandid(int brandid) {
+	public void setBrandid(Brand brandid) {
 		this.brandid = brandid;
 	}
 
-	public userType getUsertype() {
+	public String getUsertype() {
 		return usertype;
 	}
 
-	public void setUsertype(userType usertype) {
+	public void setUsertype(String usertype) {
 		this.usertype = usertype;
 	}	
 
