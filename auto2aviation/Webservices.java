@@ -103,6 +103,12 @@ public class Webservices {
 		return user.retrieve();
 	}
 	
+	@GetMapping("/user/allUsers")
+	public List<User> getAllUserDetails()
+	{
+		return user.retrieve();
+	}
+	
 	@PutMapping("/admin/modifyUser/{id}")
 	public UserResult updateEmployee(@PathVariable(value = "id") int userId,
 			@RequestBody User userDetails){
