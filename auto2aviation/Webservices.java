@@ -109,6 +109,12 @@ public class Webservices {
 		return user.retrieve();
 	}
 	
+	@GetMapping("/user/userById/{id}")
+	public Optional<User> getUserbyId(@PathVariable(value = "id") int userId)
+	{
+		return user.findById(userId);
+	}
+	
 	@PutMapping("/admin/modifyUser/{id}")
 	public UserResult updateEmployee(@PathVariable(value = "id") int userId,
 			@RequestBody User userDetails){
