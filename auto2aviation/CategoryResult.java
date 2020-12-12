@@ -1,19 +1,19 @@
 package auto2aviation;
 
-public class ProductResult 
+public class CategoryResult
 {
-	
+
     private boolean status;
 	
 	private String message;
 	
-	private Products products;
+	private Category category;
 
-	public ProductResult(boolean status, String message, Products products) {
+	public CategoryResult(boolean status, String message, Category category) {
 		super();
 		this.status = status;
 		this.message = message;
-		this.products = products;
+		this.category = category;
 	}
 
 	public boolean isStatus() {
@@ -32,13 +32,14 @@ public class ProductResult
 		this.message = message;
 	}
 
-	public Products getProducts() {
-		return products;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setProducts(Products products) {
-		this.products = products;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
+	
 
 	
 }

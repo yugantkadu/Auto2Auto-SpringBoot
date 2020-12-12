@@ -39,13 +39,14 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getcategorydescription() {
+		
+	public String getCategorydescription() {
 		return categorydescription;
 	}
-	public void setcategorydescription(String categorydescription) {
+	public void setCategorydescription(String categorydescription) {
 		this.categorydescription = categorydescription;
 	}
-	public String getImage() {
+		public String getImage() {
 		return image;
 	}
 	public void setImage(String image) {
