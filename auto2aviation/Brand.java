@@ -1,8 +1,15 @@
 package auto2aviation;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.springframework.lang.Nullable;
 
 @Entity
 public class Brand {
@@ -12,9 +19,17 @@ public class Brand {
 	@Id
 	 private int brandid;
      private int categoryid;
+     @Nullable
 	 private String name;
+     @Nullable
 	 private String branddescription;
+     @Nullable
 	 private String image;
+	 
+	 
+	 @OneToMany(mappedBy = "brandid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+		private List<Brand> brandDetails;
+	 
 	public int getBrandid() {
 		return brandid;
 	}

@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,10 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Webservices {
 	
-	private CustomerRepository cr;
+	private UserRepository user;
 	private ProductsRepository p;
 	private CategoryRepository cat;
 	private BrandRepository b;
+	private OrderdetailsRepository ord;
 	
 	@Autowired
 	public void f1(ProductsRepository y)
@@ -31,10 +34,10 @@ public class Webservices {
 	}
 	
 	@Autowired
-	public void f1(CustomerRepository cr1)
+	public void f1(UserRepository cr1)
 	{ 
 		System.out.println("AutoWired of CustomerRepository is Successfully");
-		cr = cr1;
+		user = cr1;
 		
 	}
 	
@@ -44,12 +47,20 @@ public class Webservices {
 		System.out.println("AutoWired of CategoryRepository is Successfully");
 		cat =z;
 	}
-
+	
 	@Autowired
 	public void getbrands(BrandRepository y)
 	{ 
 		System.out.println("AutoWired of BrandRepository is Successfully");
 		b =y;
+		
+	}
+	
+	@Autowired
+	public void getorderdetails(OrderdetailsRepository o)
+	{ 
+		System.out.println("AutoWired of OrderdetailsRepository is Successfully");
+		ord =o;
 		
 	}
 	
@@ -62,30 +73,113 @@ public class Webservices {
 	}
 	
 	@PostMapping("/user/verifyCustomer")
-	public Customer allCustomers(@RequestBody Customer customer)
+
+	public UserResult allCustomers(@RequestBody User us)
 	{	
-		Customer isCustomer = cr.oncat(customer.getEmail(), customer.getPassword());
+		UserResult ur;
+		User isCustomer = user.login(us.getEmail(), us.getPassword());
 		if(isCustomer!= null) {
-			return isCustomer;
+			ur = new UserResult(true,"User Present", isCustomer);
 		}else
-			customer.setCategoryid(0);
-		return customer;	
+			ur = new UserResult(false,"User is not Present", isCustomer);
+		return ur;	
 	}
 	
 	@PostMapping("/user/registration")
-	public CustomerResult ins(@RequestBody Customer customer)
+	public UserResult ins(@RequestBody User us)
 	{
 		
-		CustomerResult ur = new CustomerResult(false,"Registration Failed");  	
-    	cr.save(customer);
+		UserResult ur = new UserResult(false,"Registration Failed", us);  	
+		user.saveRegistation(us);
       	ur.setStatus(true);
      	ur.setMessage("Registration Successfull");
     	return ur;
 		
 	}
 	
+	@GetMapping("/admin/allUsers")
+	public List<User> getAllUser()
+	{
+		return user.retrieve();
+	}
+	
+	@GetMapping("/user/allUsers")
+	public List<User> getAllUserDetails()
+	{
+		return user.retrieve();
+	}
+	
+	@GetMapping("/user/userById/{id}")
+	public Optional<User> getUserbyId(@PathVariable(value = "id") int userId)
+	{
+		return user.findById(userId);
+	}
+	
+	@PutMapping("/admin/modifyUser/{id}")
+	public UserResult updateEmployee(@PathVariable(value = "id") int userId,
+			@RequestBody User userDetails){
+		
+		boolean isUser = user.existsById(userId);
+		int updateStatus;
+		UserResult ur;
+		
+		if(isUser)
+		{
+			updateStatus = user.updateEmployee(userDetails);
+			ur = new UserResult(true,"User Present", userDetails); 	
+
+		} 
+		else{
+			 	
+			ur = new UserResult(false," not User Present", userDetails);
+		}
+		return ur;
+	}
+	
+	@PutMapping("/admin/modifyProduct/{id}")
+	public ProductResult modifyProduct(@PathVariable(value = "id") int productsId,
+			@RequestBody Products productsDetails){
+		
+		boolean isProductExist = p.existsById(productsId);
+		int updateStatus;
+		ProductResult pr;
+		
+		if(isProductExist)
+		{
+			updateStatus = p.modifyProductDetails(productsDetails);
+			pr = new ProductResult(true,"Product Updated Successfully", productsDetails); 	
+			
+		} 
+		else{
+			 	
+			pr = new ProductResult(false,"Product  is Not Updated Successfully", productsDetails);
+		}
+		return pr;
+	}
+	
+	@PutMapping("/admin/modifyCategory/{id}")
+	public CategoryResult modifyCategory(@PathVariable(value = "id") int categoryId,
+			@RequestBody Category categoryDetails){
+		
+		boolean isCategoryExist = cat.existsById(categoryId);
+		int updateStatus;
+		CategoryResult cr;
+		
+		if(isCategoryExist)
+		{
+			updateStatus = cat.modifyCategoryDetails(categoryDetails);
+			cr = new CategoryResult(true,"Category Updated Successfully", categoryDetails); 	
+			
+		} 
+		else{
+			 	
+			cr = new CategoryResult(false,"Category is Not Updated Successfully", categoryDetails);
+		}
+		return cr;
+	}
+	
 	@GetMapping("/vehicle/getAllBrands")
-	public List<Brand> allBrand()
+	public List<Brand> getallBrand()
 	{	
 		return b.findAll();		
 	}
@@ -97,5 +191,37 @@ public class Webservices {
 		return cat.findAll();
 				
 	}
+	
+
+	@PostMapping("/vehicle/addProduct")
+	public ProductResult addProduct(@RequestBody Products products)
+	{
+		
+		ProductResult pr = new ProductResult(false,"Insertion Failed",null);  	
+    	p.save(products);
+    	pr.setStatus(true);
+    	pr.setMessage("Add Vehicle Successfull");
+    	return pr;
+		
+	}
+	
+	
+
+	@GetMapping("/vehicle/getOrderDetails")
+	public List<OrderdetailsResult> OrderDetails()
+	{	
+		return ord.allOrderDetails();
+		
+				
+	}
+	
+	@GetMapping("/user/getUserProfileDetails")
+	public List<UserProfileResult> getUserProfile()
+	{	
+		return user.getUserProfile();
+		
+				
+	}
+	
 
 }

@@ -1,8 +1,15 @@
 package auto2aviation;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Products {
@@ -10,15 +17,23 @@ public class Products {
 	@Column(name="productid")
 	@Id
 	private int productid;
-	private int brandid;
-	private int manufacturerid;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "brandid")
+	private Brand brandid;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "manufacturerid")
+	private User manufacturerid;
+	
 	private String productname;
 	private String productdescription;
 	private String productimage;
 	private int quantityinstock;
 	private long buyprice;
 	
-	
+	@OneToMany(mappedBy = "productid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Products> productitems;
 	
 	public int getProductid() {
 		return productid;
@@ -32,25 +47,25 @@ public class Products {
 
 
 
-	public int getBrandid() {
+	public Brand getBrandid() {
 		return brandid;
 	}
 
 
 
-	public void setBrandid(int brandid) {
+	public void setBrandid(Brand brandid) {
 		this.brandid = brandid;
 	}
 
 
 
-	public int getManufacturerid() {
+	public User getManufacturerid() {
 		return manufacturerid;
 	}
 
 
 
-	public void setManufacturerid(int manufacturerid) {
+	public void setManufacturerid(User manufacturerid) {
 		this.manufacturerid = manufacturerid;
 	}
 
@@ -116,7 +131,7 @@ public class Products {
 
 	
 
-	public Products(int productid, int brandid, int manufacturerid, String productname, String productdescription,
+	public Products(int productid, Brand brandid, User manufacturerid, String productname, String productdescription,
 			String productimage,int quantityinstock, long buyprice) {
 		super();
 		this.productid = productid;

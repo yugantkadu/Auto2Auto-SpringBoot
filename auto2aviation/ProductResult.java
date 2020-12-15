@@ -1,21 +1,19 @@
 package auto2aviation;
 
-public class CustomerResult 
+public class ProductResult 
 {
 	
-private boolean status;
+    private boolean status;
 	
 	private String message;
+	
+	private Products products;
 
-	public CustomerResult() {
-		super();
-		
-	}
-
-	public CustomerResult(boolean status, String message) {
+	public ProductResult(boolean status, String message, Products products) {
 		super();
 		this.status = status;
 		this.message = message;
+		this.products = products;
 	}
 
 	public boolean isStatus() {
@@ -33,7 +31,14 @@ private boolean status;
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
 
+	public Products getProducts() {
+		return products;
+	}
+
+	public void setProducts(Products products) {
+		this.products = products;
+	}
+
+	
 }

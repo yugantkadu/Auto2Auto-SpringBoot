@@ -1,24 +1,33 @@
 package auto2aviation;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
-enum customerType
+enum userType
 {
   retailer,
-  manufacturer;
+  manufacturer,
+  admin;
   
 }
 
 @Entity
-public class Customer
+public class User
 {
+	@Column(name="userid")
 	@Id
-	private int customerid;
+	private int userid;
 	
 	private String firstname;
 
@@ -34,25 +43,32 @@ public class Customer
 	
 	private String pincode;
 	
-	private int categoryid;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "categoryid")
+	private Category categoryid;
 	
-	private int brandid;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "brandid")
+	private Brand brandid;
+	
+	@OneToMany(mappedBy = "userid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<User> userDetails;
 	
 	@Column(
-		    columnDefinition = "Enum('retailer','manufacturer')"
+		    columnDefinition = "Enum('retailer','manufacturer','admin')"
 			)
-	@Enumerated(EnumType.STRING)
-	private customerType customertype;
+	//@Enumerated(EnumType.STRING)
+	private String usertype;
 
-	public Customer() {
+	public User() {
 		super();
 		
 	}
 
-	public Customer(int customerid, String firstname, String lastname, String email, String password, long mobileno,
-			String address, String pincode, int categoryid, int brandid, customerType customertype) {
+	public User(int userid, String firstname, String lastname, String email, String password, long mobileno,
+			String address, String pincode, Category categoryid, Brand brandid, String usertype) {
 		super();
-		this.customerid = customerid;
+		this.userid = userid;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.email = email;
@@ -62,15 +78,15 @@ public class Customer
 		this.pincode = pincode;
 		this.categoryid = categoryid;
 		this.brandid = brandid;
-		this.customertype = customertype;
+		this.usertype = usertype;
 	}
 
-	public int getCustomerid() {
-		return customerid;
+	public int getUserid() {
+		return userid;
 	}
 
-	public void setCustomerid(int customerid) {
-		this.customerid = customerid;
+	public void setUserid(int userid) {
+		this.userid = userid;
 	}
 
 	public String getFirstname() {
@@ -129,34 +145,28 @@ public class Customer
 		this.pincode = pincode;
 	}
 
-	public int getCategoryid() {
+	public Category getCategoryid() {
 		return categoryid;
 	}
 
-	public void setCategoryid(int categoryid) {
+	public void setCategoryid(Category categoryid) {
 		this.categoryid = categoryid;
 	}
 
-	public int getBrandid() {
+	public Brand getBrandid() {
 		return brandid;
 	}
 
-	public void setBrandid(int brandid) {
+	public void setBrandid(Brand brandid) {
 		this.brandid = brandid;
 	}
 
-	public customerType getCustomertype() {
-		return customertype;
+	public String getUsertype() {
+		return usertype;
 	}
 
-	public void setCustomertype(customerType customertype) {
-		this.customertype = customertype;
-	}
-
-	
-	
-	
-	
-	
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}	
 
 }
