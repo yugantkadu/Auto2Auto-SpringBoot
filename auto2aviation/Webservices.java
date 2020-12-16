@@ -178,6 +178,27 @@ public class Webservices {
 		return cr;
 	}
 	
+	@PutMapping("/admin/modifyBrand/{id}")
+	public BrandResult modifyBrand(@PathVariable(value = "id") int brandId,
+			@RequestBody Brand brandDetails){
+		
+		boolean isBrandExist = b.existsById(brandId);
+		int updateStatus;
+		BrandResult br;
+		
+		if(isBrandExist)
+		{
+			updateStatus = b.modifyBrandDetails(brandDetails);
+			br = new BrandResult(true,"Brand Updated Successfully", brandDetails); 	
+			
+		} 
+		else{
+			 	
+			br = new BrandResult(false,"Brand is Not Updated Successfully", brandDetails);
+		}
+		return br;
+	}
+	
 	@GetMapping("/vehicle/getAllBrands")
 	public List<Brand> getallBrand()
 	{	
