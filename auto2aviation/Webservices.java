@@ -91,7 +91,7 @@ public class Webservices {
 	{
 		
 		UserResult ur = new UserResult(false,"Registration Failed", us);  	
-		user.save(us);
+		user.saveRegistation(us);
       	ur.setStatus(true);
      	ur.setMessage("Registration Successfull");
     	return ur;
@@ -102,6 +102,18 @@ public class Webservices {
 	public List<User> getAllUser()
 	{
 		return user.retrieve();
+	}
+	
+	@GetMapping("/user/allUsers")
+	public List<User> getAllUserDetails()
+	{
+		return user.retrieve();
+	}
+	
+	@GetMapping("/user/userById/{id}")
+	public Optional<User> getUserbyId(@PathVariable(value = "id") int userId)
+	{
+		return user.findById(userId);
 	}
 	
 	@PutMapping("/admin/modifyUser/{id}")
@@ -165,6 +177,27 @@ public class Webservices {
 			cr = new CategoryResult(false,"Category is Not Updated Successfully", categoryDetails);
 		}
 		return cr;
+	}
+	
+	@PutMapping("/admin/modifyBrand/{id}")
+	public BrandResult modifyBrand(@PathVariable(value = "id") int brandId,
+			@RequestBody Brand brandDetails){
+		
+		boolean isBrandExist = b.existsById(brandId);
+		int updateStatus;
+		BrandResult br;
+		
+		if(isBrandExist)
+		{
+			updateStatus = b.modifyBrandDetails(brandDetails);
+			br = new BrandResult(true,"Brand Updated Successfully", brandDetails); 	
+			
+		} 
+		else{
+			 	
+			br = new BrandResult(false,"Brand is Not Updated Successfully", brandDetails);
+		}
+		return br;
 	}
 	
 	@GetMapping("/vehicle/getAllBrands")

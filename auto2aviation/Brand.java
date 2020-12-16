@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.springframework.lang.Nullable;
@@ -18,7 +20,11 @@ public class Brand {
 	@Column(name="brandid")
 	@Id
 	 private int brandid;
-     private int categoryid;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "categoryid")
+	private Category categoryid;
+	
      @Nullable
 	 private String name;
      @Nullable
@@ -26,6 +32,7 @@ public class Brand {
      @Nullable
 	 private String image;
 	 
+     
 	 
 	 @OneToMany(mappedBy = "brandid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 		private List<Brand> brandDetails;
@@ -36,10 +43,10 @@ public class Brand {
 	public void setBrandid(int brandid) {
 		this.brandid = brandid;
 	}
-	public int getCategoryid() {
+	public Category getCategoryid() {
 		return categoryid;
 	}
-	public void setCategoryid(int categoryid) {
+	public void setCategoryid(Category categoryid) {
 		this.categoryid = categoryid;
 	}
 	public String getName() {
@@ -48,10 +55,10 @@ public class Brand {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getbranddescription() {
+	public String getBranddescription() {
 		return branddescription;
 	}
-	public void setbranddescription(String branddescription) {
+	public void setBranddescription(String branddescription) {
 		this.branddescription = branddescription;
 	}
 	public String getImage() {
@@ -60,7 +67,7 @@ public class Brand {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public Brand(int brandid, int categoryid, String name, String branddescription, String image) {
+	public Brand(int brandid, Category categoryid, String name, String branddescription, String image) {
 		
 		this.brandid = brandid;
 		this.categoryid = categoryid;
@@ -74,7 +81,7 @@ public class Brand {
 	}
 	 
 	 
-	 
+	 //branch is not merging...pritam
 
 
 }
