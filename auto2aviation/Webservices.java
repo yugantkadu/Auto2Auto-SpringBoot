@@ -85,6 +85,7 @@ public class Webservices {
 		return ur;	
 	}
 	
+	
 	@PostMapping("/user/registration")
 	public UserResult ins(@RequestBody User us)
 	{
