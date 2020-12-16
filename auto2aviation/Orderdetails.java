@@ -71,4 +71,8 @@ public class Orderdetails {
 		
 	}
 	
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/yugant
