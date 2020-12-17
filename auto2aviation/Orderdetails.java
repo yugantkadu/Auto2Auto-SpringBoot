@@ -70,9 +70,6 @@ public class Orderdetails {
 	public Orderdetails() {
 		
 	}
-	
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> origin/yugant
+
