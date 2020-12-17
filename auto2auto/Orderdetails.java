@@ -1,4 +1,4 @@
-package auto2aviation;
+package auto2auto;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

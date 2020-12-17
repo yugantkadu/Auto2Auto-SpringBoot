@@ -1,19 +1,19 @@
-package auto2aviation;
+package auto2auto;
 
-public class CategoryResult
+public class BrandResult
 {
 
     private boolean status;
 	
 	private String message;
 	
-	private Category category;
+	private Brand brand;
 
-	public CategoryResult(boolean status, String message, Category category) {
+	public BrandResult(boolean status, String message, Brand brand) {
 		super();
 		this.status = status;
 		this.message = message;
-		this.category = category;
+		this.brand = brand;
 	}
 
 	public boolean isStatus() {
@@ -30,16 +30,13 @@ public class CategoryResult
 
 	public void setMessage(String message) {
 		this.message = message;
+	} 
+	public Brand getBrand() {
+		return brand;
 	}
 
-	public Category getCategory() {
-		return category;
+	public void setBrand(Brand brand) {
+		this.brand = brand;
 	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-	
-
 	
 }
