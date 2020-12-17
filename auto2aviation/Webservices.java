@@ -1,4 +1,4 @@
-package auto2aviation;
+package auto2auto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -220,7 +220,7 @@ public class Webservices {
 	{
 		
 		ProductResult pr = new ProductResult(false,"Insertion Failed",null);  	
-    	p.save(products);
+    	p.saveProduct(products);
     	pr.setStatus(true);
     	pr.setMessage("Add Vehicle Successfull");
     	return pr;

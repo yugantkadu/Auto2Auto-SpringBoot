@@ -1,4 +1,4 @@
-package auto2aviation;
+package auto2auto;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -71,8 +71,5 @@ public class Orderdetails {
 		
 	}
 	
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/yugant
+

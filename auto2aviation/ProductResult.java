@@ -1,4 +1,4 @@
-package auto2aviation;
+package auto2auto;
 
 public class ProductResult 
 {

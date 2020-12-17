@@ -1,4 +1,4 @@
-package auto2aviation;
+package auto2auto;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
