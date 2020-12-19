@@ -1,6 +1,8 @@
 package auto2auto;
 
 public class OrderdetailsResult {
+	private boolean status;
+	private String message;
 	private int orderid;
 	private String productname;
 	private String firstname;
@@ -61,8 +63,32 @@ public class OrderdetailsResult {
 
 
 
-	public int getquantityordered() {
+	public int getQuantityordered() {
 		return quantityordered;
+	}
+
+
+
+	public boolean isStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+
+
+	public String getMessage() {
+		return message;
+	}
+
+
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 

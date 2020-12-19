@@ -246,4 +246,18 @@ public class Webservices {
 	}
 	
 
+	@PostMapping("/buy/generateOrder")
+	public OrderdetailsResult addOrder(@RequestBody Orderdetails order)
+	{
+		
+		OrderdetailsResult ordered = new OrderdetailsResult();  	
+		Orderdetails ordid= ord.save(order);
+		ord.flush();
+    	ordered.setStatus(true);
+    	ordered.setMessage("Add Order Successfull");
+    	ordered.setOrderid(ordid.getOrderid());
+    	return ordered;
+		
+	}
+
 }
