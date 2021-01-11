@@ -98,6 +98,18 @@ public class Webservices {
 		
 	}
 	
+	
+	@PostMapping("/admin/addAdmin")
+	public UserResult ur(@RequestBody User users)
+	{
+		UserResult ur = new UserResult(false,"Registration Failed", users);
+		user.saveRegistation(users);
+      	ur.setStatus(true);
+     	ur.setMessage("Admin added Sucesfully ");
+		
+		return ur;
+	}
+	
 	@GetMapping("/admin/allUsers")
 	public List<User> getAllUser()
 	{
@@ -226,6 +238,9 @@ public class Webservices {
     	return pr;
 		
 	}
+	
+	
+	
 	
 	
 

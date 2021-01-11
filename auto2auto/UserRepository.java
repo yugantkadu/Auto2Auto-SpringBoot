@@ -31,4 +31,6 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query(value = "insert into User (firstname, lastname, email, password, mobileno, address, pincode, categoryid, brandid, usertype) values (:#{#user.firstname}, :#{#user.lastname}, :#{#user.email}, :#{#user.password}, :#{#user.mobileno}, :#{#user.address}, :#{#user.pincode}, :#{#user.categoryid.categoryid}, :#{#user.brandid.brandid}, :#{#user.usertype})", nativeQuery = true)
 	void saveRegistation(@Param("user") User user);
 	
+	
+	
 }
