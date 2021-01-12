@@ -248,6 +248,17 @@ public class Webservices {
 		
 	}
 	
+	@PostMapping("/admin/addBrand")
+	public BrandResult addBrand(@RequestBody Brand brands)
+	{
+		
+		BrandResult br = new BrandResult(false,"Insertion Failed",null);  	
+    	b.saveBrand(brands);
+    	br.setStatus(true);
+    	br.setMessage("Add Brand Successfull");
+    	return br;
+		
+	}
 	
 	
 	
