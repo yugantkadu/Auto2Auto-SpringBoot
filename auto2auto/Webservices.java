@@ -24,6 +24,7 @@ public class Webservices {
 	private CategoryRepository cat;
 	private BrandRepository b;
 	private OrderdetailsRepository ord;
+	private PaymentRepository paymentRepo;
 	
 	@Autowired
 	public void f1(ProductsRepository y)
@@ -61,6 +62,14 @@ public class Webservices {
 	{ 
 		System.out.println("AutoWired of OrderdetailsRepository is Successfully");
 		ord =o;
+		
+	}
+	
+	@Autowired
+	public void getpaymentdetails(PaymentRepository p)
+	{ 
+		System.out.println("AutoWired of PaymentdetailsRepository is Successfully");
+		paymentRepo =p;
 		
 	}
 	
@@ -239,6 +248,17 @@ public class Webservices {
 		
 	}
 	
+	@PostMapping("/admin/addBrand")
+	public BrandResult addBrand(@RequestBody Brand brands)
+	{
+		
+		BrandResult br = new BrandResult(false,"Insertion Failed",null);  	
+    	b.saveBrand(brands);
+    	br.setStatus(true);
+    	br.setMessage("Add Brand Successfull");
+    	return br;
+		
+	}
 	
 	
 	
@@ -273,6 +293,25 @@ public class Webservices {
     	ordered.setOrderid(ordid.getOrderid());
     	return ordered;
 		
+	}
+	
+	@PostMapping("/buy/generatePayment")
+	public PaymentResult addPayment(@RequestBody Payment payment)
+	{
+		PaymentResult pay = new PaymentResult();
+		paymentRepo.savePayment(payment);
+		pay.setStatus(true);
+		pay.setMessage("Payment Added Successfull");
+		pay.setPayment(payment);
+    	return pay;
+	}
+	
+	@GetMapping("/vehicle/getPaymentDetails")
+	public List<Payment> paymentDetails()
+	{	
+		
+		return paymentRepo.findAll();
+				
 	}
 
 }

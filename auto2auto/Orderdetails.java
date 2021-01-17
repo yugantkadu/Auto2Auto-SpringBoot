@@ -1,13 +1,17 @@
 package auto2auto;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Orderdetails {
@@ -27,6 +31,10 @@ public class Orderdetails {
 	
 	private int quantityordered;
 	private long price;
+	
+	@OneToMany(mappedBy = "orderid", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Orderdetails> OrderdetailsList;
+ 
 	
 	public int getOrderid() {
 		return orderid;
@@ -73,6 +81,6 @@ public class Orderdetails {
 	public Orderdetails() {
 		
 	}
-
+	
 }
 
