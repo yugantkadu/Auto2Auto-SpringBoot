@@ -19,6 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 	int modifyBrandDetails(@Param("brand") Brand brand);
 
 	
+
+	@Transactional
+	@Modifying
+	@Query(value = "insert into Brand (categoryid, name, branddescription, image) values (:#{#brand.categoryid}, :#{#brand.name}, :#{#brand.branddescription}, :#{#brand.image})", nativeQuery = true)
+	void saveBrand(@Param("brand") Brand brand);
+
+	
 }
 
 

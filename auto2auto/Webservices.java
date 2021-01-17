@@ -25,6 +25,7 @@ public class Webservices
 	private CategoryRepository cat;
 	private BrandRepository b;
 	private OrderdetailsRepository ord;
+	private PaymentRepository paymentRepo;
 	
 	@Autowired
 	public void f1(ProductsRepository y)
@@ -65,6 +66,14 @@ public class Webservices
 		
 	}
 	
+	@Autowired
+	public void getpaymentdetails(PaymentRepository p)
+	{ 
+		System.out.println("AutoWired of PaymentdetailsRepository is Successfully");
+		paymentRepo =p;
+		
+	}
+	
 	@GetMapping("/vehicle/getAllProducts")
 	public List<Products> allProducts()
 	{	
@@ -97,6 +106,18 @@ public class Webservices
      	ur.setMessage("Registration Successfull");
     	return ur;
 		
+	}
+	
+	
+	@PostMapping("/admin/addAdmin")
+	public UserResult ur(@RequestBody User users)
+	{
+		UserResult ur = new UserResult(false,"Registration Failed", users);
+		user.saveRegistation(users);
+      	ur.setStatus(true);
+     	ur.setMessage("Admin added Sucesfully ");
+		
+		return ur;
 	}
 	
 	@GetMapping("/admin/allUsers")
@@ -228,6 +249,20 @@ public class Webservices
 		
 	}
 	
+	@PostMapping("/admin/addBrand")
+	public BrandResult addBrand(@RequestBody Brand brands)
+	{
+		
+		BrandResult br = new BrandResult(false,"Insertion Failed",null);  	
+    	b.saveBrand(brands);
+    	br.setStatus(true);
+    	br.setMessage("Add Brand Successfull");
+    	return br;
+		
+	}
+	
+	
+	
 	
 
 	@GetMapping("/vehicle/getOrderDetails")
@@ -259,6 +294,25 @@ public class Webservices
     	ordered.setOrderid(ordid.getOrderid());
     	return ordered;
 		
+	}
+	
+	@PostMapping("/buy/generatePayment")
+	public PaymentResult addPayment(@RequestBody Payment payment)
+	{
+		PaymentResult pay = new PaymentResult();
+		paymentRepo.savePayment(payment);
+		pay.setStatus(true);
+		pay.setMessage("Payment Added Successfull");
+		pay.setPayment(payment);
+    	return pay;
+	}
+	
+	@GetMapping("/vehicle/getPaymentDetails")
+	public List<Payment> paymentDetails()
+	{	
+		
+		return paymentRepo.findAll();
+				
 	}
 
 }
