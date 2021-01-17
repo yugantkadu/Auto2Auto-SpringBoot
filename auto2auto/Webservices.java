@@ -214,7 +214,7 @@ public class Webservices {
 	
 	@GetMapping("/vehicle/getAllBrands")
 	public List<Brand> getallBrand()
-	{	
+	{	 
 		return b.findAll();		
 	}
 	
